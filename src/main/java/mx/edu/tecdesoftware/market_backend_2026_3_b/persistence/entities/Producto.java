@@ -25,11 +25,19 @@ public class Producto {
     @Column (name = "precio_venta")
     private Double precioVenta;
 
-    @Column (name = "cantidad_Strock")
+    @Column (name = "cantidad_Stock")
     private Integer cantidadStrock;
 
     @Column (name = "estado")
     private Boolean estado;
+
+    //Relacion con categoria
+    //Muchos productos pueden pertenecer a una categoria
+    @ManyToOne
+    @JoinColumn (name= "id_categoria",
+    //No quiero que se mueva nada en la tabla
+    insertable = false, updatable= false)
+    private Categoria categoria;
 
     public Integer getIdProducto() {
         return idProducto;

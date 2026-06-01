@@ -3,6 +3,7 @@ package mx.edu.tecdesoftware.market_backend_2026_3_b.persistence.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table (name = "compras" )
@@ -23,6 +24,15 @@ public class Compra {
     private String comentario;
 
     private String estado;
+
+    //Relacion con cliente: Muchas compras para un cliente
+    @ManyToOne
+    @JoinColumn (name= "id_cliente",
+    insertable = false, updatable= false)
+    private Cliente cliente;
+
+    @OneToMany (mappedBy= "compra")
+    private List<CompraProducto> productos;
 
     public Integer getIdCompra() {
         return idCompra;
