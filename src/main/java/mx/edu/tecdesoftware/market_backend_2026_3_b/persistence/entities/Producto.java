@@ -1,7 +1,7 @@
 package mx.edu.tecdesoftware.market_backend_2026_3_b.persistence.entities;
 
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
+
 @Entity
 @Table (name = "productos")
 public class Producto {
@@ -26,7 +26,7 @@ public class Producto {
     private Double precioVenta;
 
     @Column (name = "cantidad_Stock")
-    private Integer cantidadStrock;
+    private Integer cantidadStock;
 
     @Column (name = "estado")
     private Boolean estado;
@@ -79,12 +79,12 @@ public class Producto {
         this.precioVenta = precioVenta;
     }
 
-    public Integer getCantidadStrock() {
-        return cantidadStrock;
+    public Integer getCantidadStock() {
+        return cantidadStock;
     }
 
-    public void setCantidadStrock(Integer cantidadStrock) {
-        this.cantidadStrock = cantidadStrock;
+    public void setCantidadStock(Integer cantidadStock) {
+        this.cantidadStock = cantidadStock;
     }
 
     public Boolean getEstado() {
@@ -93,5 +93,13 @@ public class Producto {
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }

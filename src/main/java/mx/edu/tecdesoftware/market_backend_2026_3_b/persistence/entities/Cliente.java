@@ -75,4 +75,12 @@ private List<Compra> compras;
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public List<Compra> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(List<Compra> compras) {
+        this.compras = compras;
+    }
 }
