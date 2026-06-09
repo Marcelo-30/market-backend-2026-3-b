@@ -1,7 +1,7 @@
 package mx.edu.tecdesoftware.market_backend_2026_3_b.persistence;
 
 import mx.edu.tecdesoftware.market_backend_2026_3_b.domain.Product;
-import mx.edu.tecdesoftware.market_backend_2026_3_b.domain.reopository.ProductRepository;
+import mx.edu.tecdesoftware.market_backend_2026_3_b.domain.repository.ProductRepository;
 import mx.edu.tecdesoftware.market_backend_2026_3_b.persistence.crud.ProductoCrudRepository;
 import mx.edu.tecdesoftware.market_backend_2026_3_b.persistence.entities.Producto;
 import mx.edu.tecdesoftware.market_backend_2026_3_b.persistence.mapper.ProductMapper;
@@ -23,7 +23,7 @@ public class ProductoRepository implements ProductRepository {
 
     public List<Product> getAll(){
 //Se "castea" Iterable a lista
-       List<Producto> productos=(List<Producto>) productoCrudRepository.findALL();
+       List<Producto> productos=(List<Producto>) productoCrudRepository.findAll();
         return productMapper.toProducts(productos);
 
     }
@@ -42,8 +42,8 @@ public class ProductoRepository implements ProductRepository {
 
     //Obtener un producto dado el ID
     public Optional<Product> getProduct(int productId){
-        return productoCrudRepository.findById(productId);
-        .map(Producto producto -> productMapper.toProduct(producto));
+        return productoCrudRepository.findById(productId)
+        .map( producto -> productMapper.toProduct(producto));
     }
 
     //Guardar Producto
