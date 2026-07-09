@@ -1,5 +1,4 @@
 package mx.edu.tecdesoftware.market_backend_2026_3_b.domain.service;
-
 import mx.edu.tecdesoftware.market_backend_2026_3_b.domain.Product;
 import mx.edu.tecdesoftware.market_backend_2026_3_b.domain.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class ProductService {
         return productRepository.getProduct(productId);
     }
 
-    public Optional<List<Product>> getProductByCategory(int categoryId){
+    public Optional<List<Product>> getByCategory(int categoryId){
         return productRepository.getByCategory(categoryId);
 
     }
@@ -36,21 +35,5 @@ public class ProductService {
         }
         return false;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

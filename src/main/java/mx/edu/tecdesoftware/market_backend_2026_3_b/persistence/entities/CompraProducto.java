@@ -13,7 +13,8 @@ public class CompraProducto {
 
     // Unir la tabla de compras
     @ManyToOne
-    @JoinColumn (name = "id_compra", insertable= false, updatable= false)
+    @MapsId("idCompra")
+    @JoinColumn(name = "id_compra")
     private Compra compra;
 
     //Unir la tabla con productos

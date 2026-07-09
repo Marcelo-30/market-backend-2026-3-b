@@ -13,7 +13,7 @@ public class Producto {
     @Column (name = "idProducto")
     private Integer idProducto;
 
-
+    @Column (name = "nombre")
     private String nombre;
 
     @Column (name = "idCategoria")

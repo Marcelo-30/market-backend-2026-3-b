@@ -10,10 +10,10 @@ import java.util.List;
 public class Compra {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column (name = "idCompra")
+    @Column (name = "id_compra")
     private Integer idCompra;
 
-    @Column (name = "idCliente")
+    @Column (name = "id_cliente")
     private String idCliente;
 
     private LocalDateTime fecha;
@@ -25,13 +25,12 @@ public class Compra {
 
     private String estado;
 
-    //Relacion con cliente: Muchas compras para un cliente
+    // Relacion con cliente: Muchas compras para un cliente
     @ManyToOne
-    @JoinColumn (name= "id_cliente",
-    insertable = false, updatable= false)
+    @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
     private Cliente cliente;
 
-    @OneToMany (mappedBy= "compra")
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
     private List<CompraProducto> productos;
 
     public Integer getIdCompra() {
@@ -89,4 +88,13 @@ public class Compra {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public List<CompraProducto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<CompraProducto> productos) {
+        this.productos = productos;
+    }
+
 }
