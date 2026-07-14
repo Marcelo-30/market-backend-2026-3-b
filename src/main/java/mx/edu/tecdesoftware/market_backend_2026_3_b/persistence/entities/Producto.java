@@ -3,40 +3,43 @@ package mx.edu.tecdesoftware.market_backend_2026_3_b.persistence.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table (name = "productos")
+@Table(name = "productos")
 public class Producto {
-    //llave primaria
-    @Id
-    //Autoincrementable
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    @Column (name = "idProducto")
+    // Llave primaria
+    @Id
+
+    // Autoincrementable
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_producto")
     private Integer idProducto;
 
-    @Column (name = "nombre")
+    @Column(name = "nombre")
     private String nombre;
 
-    @Column (name = "idCategoria")
-    private String idCategoria;
+    @Column(name = "id_categoria")
+    private Integer idCategoria;
 
-    @Column (name = "codigo_barras")
+    @Column(name = "codigo_barras")
     private String codigoBarras;
 
-    @Column (name = "precio_venta")
+    @Column(name = "precio_venta")
     private Double precioVenta;
 
-    @Column (name = "cantidad_Stock")
+    @Column(name = "cantidad_stock")
     private Integer cantidadStock;
 
-    @Column (name = "estado")
+    @Column(name = "estado")
     private Boolean estado;
 
-    //Relacion con categoria
-    //Muchos productos pueden pertenecer a una categoria
+    // Relación con categoría
+    // Muchos productos pueden pertenecer a una categoría
     @ManyToOne
-    @JoinColumn (name= "id_categoria",
-    //No quiero que se mueva nada en la tabla
-    insertable = false, updatable= false)
+    @JoinColumn(
+            name = "id_categoria",
+            insertable = false,
+            updatable = false
+    )
     private Categoria categoria;
 
     public Integer getIdProducto() {
@@ -55,11 +58,11 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public String getIdCategoria() {
+    public Integer getIdCategoria() {
         return idCategoria;
     }
 
-    public void setIdCategoria(String idCategoria) {
+    public void setIdCategoria(Integer idCategoria) {
         this.idCategoria = idCategoria;
     }
 

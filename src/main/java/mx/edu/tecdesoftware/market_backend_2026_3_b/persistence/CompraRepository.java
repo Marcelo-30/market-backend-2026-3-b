@@ -25,23 +25,31 @@ public class CompraRepository implements PurchaseRepository {
     public List<Purchase> getAll() {
         List<Compra> compras = new ArrayList<>();
         compraCrudRepository.findAll().forEach(compras::add);
+
         return mapper.toPurchases(compras);
     }
 
     @Override
     public Optional<List<Purchase>> getByClientId(String clientId) {
         return compraCrudRepository.findByIdCliente(clientId)
-                .map(compras -> mapper.toPurchases(compras));
+                .map(mapper::toPurchases);
     }
 
     @Override
     public Purchase save(Purchase purchase) {
         Compra compra = mapper.toCompra(purchase);
 
+        // Es una compra nueva; PostgreSQL genera el identificador.
+        compra.setIdCompra(null);
+
         if (compra.getProductos() != null) {
-            compra.getProductos().forEach(producto -> producto.setCompra(compra));
+            compra.getProductos().forEach(producto -> {
+                producto.setCompra(compra);
+            });
         }
 
-        return mapper.toPurchase(compraCrudRepository.save(compra));
+        Compra compraGuardada = compraCrudRepository.save(compra);
+
+        return mapper.toPurchase(compraGuardada);
     }
 }

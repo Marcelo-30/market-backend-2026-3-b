@@ -29,7 +29,7 @@ public class ProductoRepository implements ProductRepository {
     }
     //Obtener Productos por categoria
     public Optional <List<Product>> getByCategory(int categoryId){
-        List<Producto> productos = productoCrudRepository.findByCantidadOrderByNombreAsc(categoryId);
+        List<Producto> productos = productoCrudRepository.findByIdCategoriaOrderByNombreAsc(categoryId);
         return Optional.of(productMapper.toProducts(productos));
 
     }

@@ -1,6 +1,5 @@
 package mx.edu.tecdesoftware.market_backend_2026_3_b.persistence.entities;
 
-
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -9,30 +8,33 @@ import java.util.List;
 @Table(name = "clientes")
 public class Cliente {
 
-@Id
-@GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "id")
+    private String id;
 
-private Integer id;
+    @Column(name = "nombre")
+    private String nombre;
 
-private String nombre;
+    @Column(name = "apellidos")
+    private String apellidos;
 
-private String apellidos;
+    @Column(name = "celular")
+    private String celular;
 
-private String celular;
+    @Column(name = "direccion")
+    private String direccion;
 
-private String direccion;
+    @Column(name = "correo_electronico")
+    private String email;
 
-@Column (name = "correo_electronico")
-private String email;
+    @OneToMany(mappedBy = "cliente")
+    private List<Compra> compras;
 
-@OneToMany (mappedBy ="cliente")
-private List<Compra> compras;
-
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
