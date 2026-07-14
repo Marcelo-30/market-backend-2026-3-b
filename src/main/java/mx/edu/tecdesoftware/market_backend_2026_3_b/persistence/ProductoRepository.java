@@ -8,51 +8,78 @@ import mx.edu.tecdesoftware.market_backend_2026_3_b.persistence.mapper.ProductMa
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-//Le da acceso a la BD
+// Le da acceso a la base de datos
 public class ProductoRepository implements ProductRepository {
 
     @Autowired
-        private ProductoCrudRepository productoCrudRepository;
+    private ProductoCrudRepository productoCrudRepository;
 
     @Autowired
-        private ProductMapper productMapper;
+    private ProductMapper productMapper;
 
-    public List<Product> getAll(){
-//Se "castea" Iterable a lista
-       List<Producto> productos=(List<Producto>) productoCrudRepository.findAll();
+    // Obtener todos los productos
+    @Override
+    public List<Product> getAll() {
+        List<Producto> productos = new ArrayList<>();
+
+        productoCrudRepository.findAll().forEach(productos::add);
+
         return productMapper.toProducts(productos);
-
     }
-    //Obtener Productos por categoria
-    public Optional <List<Product>> getByCategory(int categoryId){
-        List<Producto> productos = productoCrudRepository.findByIdCategoriaOrderByNombreAsc(categoryId);
+
+    // Obtener productos por categoría
+    @Override
+    public Optional<List<Product>> getByCategory(int categoryId) {
+        List<Producto> productos =
+                productoCrudRepository
+                        .findByIdCategoriaOrderByNombreAsc(categoryId);
+
+        if (productos.isEmpty()) {
+            return Optional.empty();
+        }
+
         return Optional.of(productMapper.toProducts(productos));
-
-    }
-    //Obtener productos escasos
-    public Optional<List<Product>> getScarceProducts (int quantity){
-        Optional<List<Producto>>productos=
-                productoCrudRepository.findByCantidadStockLessThanAndEstado(quantity,true);
-        return Optional.of(productMapper.toProducts(productos.get()));
     }
 
-    //Obtener un producto dado el ID
-    public Optional<Product> getProduct(int productId){
-        return productoCrudRepository.findById(productId)
-        .map( producto -> productMapper.toProduct(producto));
+    // Obtener productos escasos y activos
+    @Override
+    public Optional<List<Product>> getScarceProducts(int quantity) {
+        return productoCrudRepository
+                .findByCantidadStockLessThanAndEstado(quantity, true)
+                .filter(productos -> !productos.isEmpty())
+                .map(productMapper::toProducts);
     }
 
-    //Guardar Producto
-    public Product save(Product product){
-        Producto producto = productMapper.toProducto (product);
-        return productMapper.toProduct (productoCrudRepository.save(producto));
+    // Obtener un producto por su ID
+    @Override
+    public Optional<Product> getProduct(int productId) {
+        return productoCrudRepository
+                .findById(productId)
+                .map(productMapper::toProduct);
     }
-    //Eliminar un producto por ID
-    public void delete(int productId){
+
+    // Guardar un producto nuevo
+    @Override
+    public Product save(Product product) {
+        Producto producto = productMapper.toProducto(product);
+
+        // El ID debe ser null para que PostgreSQL lo genere.
+        producto.setIdProducto(null);
+
+        Producto productoGuardado =
+                productoCrudRepository.save(producto);
+
+        return productMapper.toProduct(productoGuardado);
+    }
+
+    // Eliminar un producto por su ID
+    @Override
+    public void delete(int productId) {
         productoCrudRepository.deleteById(productId);
     }
 }

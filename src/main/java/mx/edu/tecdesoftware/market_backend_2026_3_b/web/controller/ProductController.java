@@ -4,6 +4,7 @@ import mx.edu.tecdesoftware.market_backend_2026_3_b.domain.Product;
 import mx.edu.tecdesoftware.market_backend_2026_3_b.domain.repository.ProductRepository;
 import mx.edu.tecdesoftware.market_backend_2026_3_b.domain.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +20,13 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
+    @GetMapping("/all")
     public ResponseEntity<List<Product>> getAll() {
-        return ResponseEntity.ok(productService.getAll());
+        return new ResponseEntity<>(
+                productService.getAll(),
+                HttpStatus.OK
+        );
     }
-
 
     @GetMapping ("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable("id") int productId) {
@@ -47,4 +51,5 @@ public class ProductController {
     public ResponseEntity delete(@PathVariable("id") int productId) {
         return ResponseEntity.ok(productService.delete(productId));
     }
+
 }
